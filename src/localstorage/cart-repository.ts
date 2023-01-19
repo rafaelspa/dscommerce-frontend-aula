@@ -18,3 +18,7 @@ export function get(): OrderDTO {
   });
   return cart;
 }
+
+export function clear(): void {
+    localStorage.setItem(CART_KEY, '{"items": []}');
+}

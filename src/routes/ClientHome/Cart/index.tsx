@@ -5,7 +5,12 @@ import { OrderDTO } from "../../../models/order";
 import { Link } from "react-router-dom";
 
 export default function Cart() {
-  const [cart, setCart] = useState<OrderDTO>(cartService.get());
+  const [cart, setCart] = useState<OrderDTO>(cartService.getCart());
+
+  function handleClearClick() {
+    cartService.clearCart();
+    setCart(cartService.getCart())
+  }
 
   return (
     <main>
@@ -51,6 +56,7 @@ export default function Cart() {
           <Link to="/catalog">
             <div className="dsc-btn dsc-btn-white">Continuar comprando</div>
           </Link>
+          <div onClick={handleClearClick} className="dsc-btn dsc-btn-white">Limpar carrinho</div>
         </div>
       </section>
     </main>
