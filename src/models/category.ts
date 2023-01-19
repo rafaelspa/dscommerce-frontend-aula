@@ -1,4 +1,4 @@
 export type CategoryDTO = {
-    id: number;
+    id?: number;
     name: string;
 }
