@@ -7,7 +7,6 @@ import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { ProductDTO } from "../../../models/product";
-import axios from "axios";
 
 export default function ProductDetails() {
   const params = useParams();
@@ -15,9 +14,8 @@ export default function ProductDetails() {
   const [product, setProduct] = useState<ProductDTO>();
 
   useEffect(() => {
-    axios.get(`http://localhost:8080/products/${params.productId}`).then((response) => {
-     const prod = response.data;
-     setProduct(prod);
+    productService.findById(Number(params.productId)).then((response) => {
+      setProduct(response.data);
     });
   }, []);
 
