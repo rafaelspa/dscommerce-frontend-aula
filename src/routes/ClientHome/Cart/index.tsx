@@ -1,5 +1,5 @@
 import "./styles.css";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import * as cartService from "../../../services/cart-service";
 import { OrderDTO, OrderItemDTO } from "../../../models/order";
 
@@ -41,12 +41,7 @@ const mockCart = {
 };
 
 export default function Cart() {
-  const cart: OrderDTO = new OrderDTO();
-  useEffect(() => {
-    cart.items.push(item1);
-    cart.items.push(item2);
-    cartService.saveCart(cart);
-  }, []);
+  const [cart, setCart] = useState<OrderDTO>(cartService.get());
 
   return (
     <main>
