@@ -190,7 +190,6 @@ nav a {
   font-size: 16px;
   font-weight: 700;
   display: flex;
-  background-color: var(--dsc-color-btn-primary);
   align-items: center;
   justify-content: center;
   width: 100%;
