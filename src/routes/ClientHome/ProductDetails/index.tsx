@@ -15,7 +15,7 @@ export default function ProductDetails() {
   const [product, setProduct] = useState<ProductDTO>();
 
   useEffect(() => {
-    axios.get("http://localhost:8080/products/2").then((response) => {
+    axios.get(`http://localhost:8080/products/${params.productId}`).then((response) => {
      const prod = response.data;
      setProduct(prod);
     });
