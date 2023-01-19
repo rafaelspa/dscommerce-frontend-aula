@@ -1,5 +1,23 @@
 import "./styles.css";
-import computerImg from "../../../assets/computer.png";
+import { useEffect } from "react";
+import * as cartService from "../../../services/cart-service";
+import { OrderDTO, OrderItemDTO } from "../../../models/order";
+
+const item1: OrderItemDTO = new OrderItemDTO(
+  4,
+  1,
+  "PC Gamer",
+  1200,
+  "https://raw.githubusercontent.com/devsuperior/dscatalog-resources/master/backend/img/4-big.jpg"
+);
+
+const item2: OrderItemDTO = new OrderItemDTO(
+  5,
+  2,
+  "Rails for Dummies",
+  100.99,
+  "https://raw.githubusercontent.com/devsuperior/dscatalog-resources/master/backend/img/5-big.jpg"
+);
 
 const mockCart = {
   items: [
@@ -23,12 +41,22 @@ const mockCart = {
 };
 
 export default function Cart() {
+  const cart: OrderDTO = new OrderDTO();
+  useEffect(() => {
+    cart.items.push(item1);
+    cart.items.push(item2);
+    cartService.saveCart(cart);
+  }, []);
+
   return (
     <main>
       <section id="cart-container-section" className="dsc-container">
         <div className="dsc-card dsc-mb20">
-          {mockCart.items.map((item) => (
-            <div key={item.productId} className="dsc-cart-item-container dsc-line-bottom">
+          {cart.items.map((item) => (
+            <div
+              key={item.productId}
+              className="dsc-cart-item-container dsc-line-bottom"
+            >
               <div className="dsc-cart-item-left">
                 <img src={item.imgUrl} alt={item.name} />
                 <div className="dsc-cart-item-description">
@@ -40,7 +68,9 @@ export default function Cart() {
                   </div>
                 </div>
               </div>
-              <div className="dsc-cart-item-right">R$ {(item.price * item.quantity).toFixed(2)}</div>
+              <div className="dsc-cart-item-right">
+                R$ {(item.price * item.quantity).toFixed(2)}
+              </div>
             </div>
           ))}
 
