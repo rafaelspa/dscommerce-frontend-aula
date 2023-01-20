@@ -23,3 +23,14 @@ export function findPageRequest(
 export async function findById(id: number) {
   return await requestBackend({url: `/products/${id}`});
 }
+
+export async function deleteById(id: number) {
+ 
+  const config: AxiosRequestConfig = {
+    method: "DELETE",
+    url: `/products/${id}`,
+    withCredentials: true
+  }
+
+  return requestBackend(config);
+}
