@@ -139,8 +139,10 @@ nav a {
   justify-content: flex-end;
 }
 
-.dsc-logged-user p {
+.dsc-logged-user span {
   font-size: 12px;
+  cursor: pointer;
+  font-weight: 700;
 }
 
 @media (min-width: 576px) {
