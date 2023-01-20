@@ -2,10 +2,8 @@ import "./styles.css";
 import { useContext, useState } from "react";
 import { CredentialsDTO } from "../../../models/auth";
 import * as authService from "../../../services/auth-service";
-import * as cartService from "../../../services/cart-service";
 import { useNavigate } from "react-router-dom";
-import { ContextCartCount } from "../../../utils/context-cart";
-import { OrderDTO } from "../../../models/order";
+import { ContextToken } from "../../../utils/context-token";
 
 export default function Login() {
   const [formData, setFormData] = useState<CredentialsDTO>({
@@ -14,10 +12,8 @@ export default function Login() {
   });
 
   const navigate = useNavigate();
-  
-  const [cart, setCart] = useState<OrderDTO>(cartService.getCart());
 
-  const { setContextCartCount } = useContext(ContextCartCount);
+  const { setContextTokenPayload } = useContext(ContextToken);
 
   function handleSubmit(event: any) {
     event.preventDefault();
@@ -25,10 +21,8 @@ export default function Login() {
       .loginRequest(formData)
       .then((response) => {
         authService.saveAccessToken(response.data.access_token);
+        setContextTokenPayload(authService.getAccessTokenPayload());
         navigate("/cart");
-        const newCart = cartService.getCart();
-        setCart(newCart);
-        setContextCartCount(newCart.items.length);
       })
       .catch((error) => {
         console.log("Erro no login", error);
