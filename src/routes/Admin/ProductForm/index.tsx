@@ -19,11 +19,15 @@ export default function ProductForm() {
       placeholder: "Nome",
     },
     price: {
-      value: "",
+      value: 0,
       id: "price",
       name: "price",
       type: "number",
       placeholder: "Preço",
+      validation: function (value: any) {
+        return Number(value) > 0;
+      },
+      message: "Favor informar um valor positivo",
     },
     imgUrl: {
       value: "",
