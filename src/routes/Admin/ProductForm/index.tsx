@@ -1,10 +1,15 @@
 import "./styles.css";
 import * as forms from "../../../utils/forms";
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import * as productService from "../../../services/product-service";
+import { useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom";
 import FormInput from "../../../components/FormInput";
 
 export default function ProductForm() {
+  const params = useParams();
+
+  const isEditing = params.productId !== 'create';
+
   const [formData, setFormData] = useState<any>({
     name: {
       value: "",
@@ -34,6 +39,15 @@ export default function ProductForm() {
     const value = event.target.value;
     setFormData(forms.update(formData, name, value));
   }
+
+  useEffect(() => {
+    if (isEditing) {
+      productService.findById(Number(params.productId))
+        .then(response => {
+          console.log(response);
+        })
+    }
+  }, []);
 
   return (
     <main>
