@@ -37,10 +37,7 @@ export default function Login() {
   function handleSubmit(event: any) {
     event.preventDefault();
     authService
-      .loginRequest({
-        username: formData.username.value,
-        password: formData.password.value,
-      })
+      .loginRequest(forms.toValue(formData))
       .then((response) => {
         authService.saveAccessToken(response.data.access_token);
         setContextTokenPayload(authService.getAccessTokenPayload());
@@ -56,6 +53,7 @@ export default function Login() {
     const value = event.target.value;
     setFormData(forms.update(formData, name, value));
   }
+
   return (
     <main>
       <section id="login-section" className="dsc-container">
