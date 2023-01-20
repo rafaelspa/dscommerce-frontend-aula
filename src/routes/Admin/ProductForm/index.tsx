@@ -8,7 +8,7 @@ import FormInput from "../../../components/FormInput";
 export default function ProductForm() {
   const params = useParams();
 
-  const isEditing = params.productId !== 'create';
+  const isEditing = params.productId !== "create";
 
   const [formData, setFormData] = useState<any>({
     name: {
@@ -42,10 +42,10 @@ export default function ProductForm() {
 
   useEffect(() => {
     if (isEditing) {
-      productService.findById(Number(params.productId))
-        .then(response => {
-          console.log(response);
-        })
+      productService.findById(Number(params.productId)).then((response) => {
+        const newFormData = forms.updateAll(formData, response.data);
+        setFormData(newFormData);
+      });
     }
   }, []);
 
