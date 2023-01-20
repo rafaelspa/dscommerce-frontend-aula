@@ -10,7 +10,6 @@ import DialogInfo from "../../../components/DialogInfo";
 import DialogConfirmation from "../../../components/DialogConfirmation";
 import ButtonInverse from "../../../components/ButtonInverse";
 import { useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom";
 
 type QueryParams = {
   page: number;
