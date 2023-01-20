@@ -23,7 +23,6 @@ export default function Catalog() {
   });
 
   useEffect(() => {
-    console.log("TESTE", hasAnyRoles([]));
     productService
       .findPageRequest(queryParams.page, queryParams.name)
       .then((response) => {
