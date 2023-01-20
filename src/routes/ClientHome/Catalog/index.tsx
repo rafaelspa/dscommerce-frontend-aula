@@ -23,7 +23,6 @@ export default function Catalog() {
   });
 
   useEffect(() => {
-    console.log("AUTENTICADO", isAuthenticated());
     productService
       .findPageRequest(queryParams.page, queryParams.name)
       .then((response) => {
