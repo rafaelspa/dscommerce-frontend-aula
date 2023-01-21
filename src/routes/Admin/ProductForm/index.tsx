@@ -19,7 +19,7 @@ export default function ProductForm() {
       placeholder: "Nome",
     },
     price: {
-      value: 0,
+      value: "",
       id: "price",
       name: "price",
       type: "number",
@@ -41,7 +41,9 @@ export default function ProductForm() {
   function handleInputChange(event: any) {
     const name = event.target.name;
     const value = event.target.value;
-    setFormData(forms.update(formData, name, value));
+    const dataUpdated = forms.update(formData, name, value);
+    const dataValidated = forms.validate(dataUpdated, name);
+    setFormData(dataValidated);
   }
 
   useEffect(() => {
@@ -60,21 +62,29 @@ export default function ProductForm() {
           <form className="dsc-card dsc-form">
             <h2>Dados do produto</h2>
             <div className="dsc-form-controls-container">
-              <FormInput
-                {...formData.name}
-                className="dsc-form-control"
-                onChange={handleInputChange}
-              />
-              <FormInput
-                {...formData.price}
-                className="dsc-form-control"
-                onChange={handleInputChange}
-              />
-              <FormInput
-                {...formData.imgUrl}
-                className="dsc-form-control"
-                onChange={handleInputChange}
-              />
+              <div>
+                <FormInput
+                  {...formData.name}
+                  className="dsc-form-control"
+                  onChange={handleInputChange}
+                />
+                <div className="dsc-form-error">{formData.name.message}</div>
+              </div>
+              <div>
+                <FormInput
+                  {...formData.price}
+                  className="dsc-form-control"
+                  onChange={handleInputChange}
+                />
+                  <div className="dsc-form-error">{formData.price.message}</div>
+              </div>
+              <div>
+                <FormInput
+                  {...formData.imgUrl}
+                  className="dsc-form-control"
+                  onChange={handleInputChange}
+                />
+              </div>
             </div>
             <div className="dsc-product-form-buttons">
               <Link to="/admin/products">
