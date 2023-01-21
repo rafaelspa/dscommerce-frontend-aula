@@ -8,6 +8,7 @@ import FormInput from "../../../components/FormInput";
 import FormTextArea from "../../../components/FormTextArea";
 import { CategoryDTO } from "../../../models/category";
 import FormSelect from "../../../components/FormSelect";
+import { selectStyles } from "../../../utils/select";
 
 export default function ProductForm() {
   const params = useParams();
@@ -130,7 +131,8 @@ export default function ProductForm() {
                 <FormSelect
                   {...formData.categories}
                   isMulti
-                  className="dsc-form-control"
+                  styles={selectStyles}
+                  className="dsc-form-control dsc-form-select-container"
                   onChange={(obj: any) => {
                     const newFormData = forms.updateAndValidate(
                       formData,
