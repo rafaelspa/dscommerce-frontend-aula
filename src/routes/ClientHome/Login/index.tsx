@@ -7,6 +7,12 @@ import { ContextToken } from "../../../utils/context-token";
 import FormInput from "../../../components/FormInput";
 
 export default function Login() {
+  const [submitResponseFail, setSubmitResponseFail] = useState(false);
+
+  const navigate = useNavigate();
+
+  const { setContextTokenPayload } = useContext(ContextToken);
+
   const [formData, setFormData] = useState<any>({
     username: {
       value: "",
@@ -30,21 +36,26 @@ export default function Login() {
     },
   });
 
-  const navigate = useNavigate();
-
-  const { setContextTokenPayload } = useContext(ContextToken);
-
   function handleSubmit(event: any) {
     event.preventDefault();
+
+    setSubmitResponseFail(false);
+
+    const formDataValidated = forms.dirtyAndValidateAll(formData);
+    if (forms.hasAnyInvalid(formDataValidated)) {
+      setFormData(formDataValidated);
+      return;
+    }
+
     authService
-      .loginRequest(forms.toValue(formData))
+      .loginRequest(forms.toValues(formData))
       .then((response) => {
         authService.saveAccessToken(response.data.access_token);
         setContextTokenPayload(authService.getAccessTokenPayload());
         navigate("/cart");
       })
-      .catch((error) => {
-        console.log("Erro no login", error);
+      .catch(() => {
+        setSubmitResponseFail(true);
       });
   }
 
@@ -72,7 +83,9 @@ export default function Login() {
                   onTurnDirty={handleTurnDirty}
                   onChange={handleInputChange}
                 />
-                <div className="dsc-form-error"></div>
+                <div className="dsc-form-error">
+                  {formData.username.message}
+                </div>
               </div>
               <div>
                 <FormInput
@@ -81,8 +94,18 @@ export default function Login() {
                   onTurnDirty={handleTurnDirty}
                   onChange={handleInputChange}
                 />
+                <div className="dsc-form-error">
+                  {formData.password.message}
+                </div>
               </div>
             </div>
+
+            {submitResponseFail && (
+              <div className="dsc-form-global-error">
+                Usuário ou senha inválidos
+              </div>
+            )}
+
             <div className="dsc-login-form-buttons dsc-mt20">
               <button type="submit" className="dsc-btn dsc-btn-blue">
                 Entrar
